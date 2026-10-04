@@ -1,0 +1,35 @@
+<html layout:decorate="~{layout/layout}">
+	<div layout:fragment="content" class="container mt-5 px-3 d-flex justify-content-center">
+		<div class="w-100" style="max-width: 800px;">
+			<div class="text-center mb-4">
+				<h4 class="fw-bold">회원 정보</h4>
+			</div>
+			<div class="card mb-4">
+				<div class="card-body ps-5 py-3">
+					<div class="my-3">
+						<label class="fw-bold">아이디</label>
+						<span th:text="${siteUser.username}" class="ms-3"></span>
+					</div>
+					<div class="my-3">
+						<label class="fw-bold">이메일</label>
+						<span th:text="${siteUser.email}" class="ms-3"></span>
+					</div>
+					<div class="my-3">
+						<label class="fw-bold">닉네임</label>
+						<span th:text="${siteUser.nickname}" class="ms-3"></span>
+					</div>
+					<div class="my-3">
+						<label class="fw-bold">가입일</label>
+						<span th:text="${siteUser.regDate}" class="ms-3"></span>
+					</div>		
+				</div>
+			</div>
+			<div class="text-center">
+				<form th:action="@{/user/delete}" method="post">
+					<a th:href="@{/user/update}" class="btn btn-primary">회원정보 수정</a>
+					<button type="submit" class="delete btn btn-secondary" th:text="탈퇴" onclick="return confirm('정말로 탈퇴하시겠습니까?')"></button>
+				</form>
+			</div>
+		</div>
+	</div>
+</html>

@@ -1,0 +1,17 @@
+<html layout:decorate="~{layout/layout}">
+	<div layout:fragment="content" class="container mt-3 d-flex justify-content-center">
+		<div class="w-100" style="max-width: 1000px;">
+			<h5 class="border-bottom my-3 pb-2 fw-bold">답변 수정</h5>
+			<form th:object="${answerForm}" method="post">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+				<!-- 유효성 검증 에러 -->
+				<div th:replace="~{form_errors :: formErrorsFragment}"></div>
+				<div class="mb-3">
+					<label class="form-label" for="content">내용</label>
+					<textarea class="form-control" th:field="*{content}" name="content" id="content" rows="10"></textarea>
+				</div>
+				<input class="btn btn-success my-2" type="submit" value="수정하기">
+			</form>
+		</div>
+	</div>
+</html>

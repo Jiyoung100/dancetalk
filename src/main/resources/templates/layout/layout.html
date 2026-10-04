@@ -1,0 +1,29 @@
+<!-- 기본 템플릿 -->
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" type="image/x-icon" th:href="@{/icons/favicon.ico}">
+	<th:block th:replace="~{layout/link}"></th:block>
+	<title>댄스 커뮤니티 | DanceTalk</title>
+</head>
+<body class="d-flex flex-column min-vh-100">	
+	<!-- 메뉴 네비게이션 -->
+	<nav th:replace="~{layout/sub_navbar :: sub_navbarFragment}"></nav>
+		
+	<!-- 삽입할 내용 -->
+	<th:block layout:fragment="content"></th:block>
+	
+	<!-- BootStrap -->
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	
+	<!-- Javascript -->
+	<th:block layout:fragment="script"></th:block>
+	
+	<!-- 푸터 -->
+	<div class="mt-auto">
+		<footer th:replace="~{layout/footer :: footerFragment}"></footer>
+	</div>
+</body>
+</html>

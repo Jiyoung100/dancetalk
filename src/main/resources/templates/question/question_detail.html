@@ -1,0 +1,171 @@
+<html layout:decorate="~{layout/layout}">
+	<div layout:fragment="content" class="container mt-4 d-flex justify-content-center">
+		<div class="w-100 my-3" style="max-width: 1200px;">
+			<div class="mb-3">
+			    <a th:href="@{|/question/list/${question.category.id}|}"
+			       th:text="${question.category.title}"
+			       class="badge rounded-pill bg-light text-dark text-decoration-none border fs-6 fw-normal">
+			    </a>
+			</div>
+			<h4 th:text="${question.subject}" class="fw-bold mb-1"></h4>
+			<div class="d-flex w-100 align-items-center gap-3">
+				<span th:if="${question.author != null}" th:text="${question.author.nickname}"></span>
+				<div th:text="${question.modifyDate} != null 
+				? ${#temporals.format(question.modifyDate, 'yyyy-MM-dd HH:mm')} + ' (수정)' : ${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')} " class="small text-muted"></div>
+				<span class="small text-muted">조회수: [[${question.viewCount}]]</span>
+			</div>
+			<div class="card my-3">
+				<div class="card-body">
+					<div class="card-text" style="white-space: pre-line;" th:text="${question.content}"></div>
+					<div class="my-3 d-flex justify-content-end gap-1">
+						<!--/* 추천 */-->
+						<a href="javascript:void(0);" th:data-uri="@{|/question/vote/${question.id}/${#lists.size(question.voter)}|}" class="recommend btn btn-sm btn-outline-danger">
+							<i th:if="${#lists.size(question.voter) == 0}" class="bi bi-heart"></i>
+							<i th:if="${#lists.size(question.voter) > 0}" class="bi bi-heart-fill"></i>
+							<span th:text="${question.voter.size}"></span>
+						</a>
+						<a class="btn btn-sm btn-outline-secondary" 
+							th:href="@{|/question/modify/${question.id}|}" 
+							sec:authorize="isAuthenticated()" 	
+							th:if="${question.author != null and question.author.username == #authentication.name}" 
+						>수정</a>
+						<a href="javascript:void(0);"
+							class="delete btn btn-sm btn-outline-secondary" 
+							th:data-uri="@{|/question/delete/${question.id}|}" 
+							sec:authorize="isAuthenticated()" 	
+							th:if="${question.author != null and question.author.username == #authentication.name}" 
+						>삭제</a>
+					</div>
+				</div>
+			</div>
+			
+			<!--/* 댓글 개수 */-->
+			<div class="border-bottom my-3 pt-2">
+				<i class="bi bi-chat-left-text-fill"></i>
+				<p class="fw-bold d-inline-block p-0" th:text="| 댓글 ${#lists.size(question.answerList)}개|"></p>
+			</div>
+
+			<!--/* 로그인한 사용자에게만 댓글 작성 폼 출력 */-->
+			<th:block sec:authorize="isAuthenticated()">
+				<form class="my-3" th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post">
+					<!--/* 유효성 검증 에러 */-->
+					<div th:replace="~{form_errors :: formErrorsFragment}"></div>
+					<textarea th:field="*{content}" class="form-control" rows="5" placeholder="댓글을 입력해주세요">
+			        </textarea>
+					<div class="d-flex">
+						<input class="btn btn-common my-2 ms-auto" type="submit" value="댓글 등록">
+					</div>
+				</form>
+			</th:block>
+			<!--/* 비회원 안내 */-->
+			<div sec:authorize="isAnonymous()" class="my-3 p-4 border rounded text-center bg-light">
+				<p class="mb-2 text-muted">
+					댓글을 작성하려면 로그인이 필요합니다.
+				</p>
+				<a th:href="@{/user/login}" class="btn btn-outline-primary btn-sm">
+					<i class="bi bi-box-arrow-in-right me-1"></i>
+					로그인하기
+				</a>
+			</div>
+
+			<!--/* 댓글 출력 */-->
+			<div class="card my-3" th:each="answer : ${paging}">
+				<a th:id="|answer_${answer.id}|"></a>
+				<div class="card-body">
+					<div class="mb-2 d-flex gap-3 align-items-center">
+						<span th:if="${answer.author != null}" th:text="${answer.author.nickname}" class="fw-bold"></span>
+						<div th:text="${answer.modifyDate} != null 
+						? ${#temporals.format(answer.modifyDate, 'yyyy-MM-dd HH:mm')} + ' (수정)' : ${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')} " class="small text-muted"></div>
+					</div>
+					<div class="card-text" style="white-space: pre-line;" th:text="${answer.content}"></div>
+					<div class="my-3 d-flex justify-content-end gap-1">
+						<!--/* 추천 */-->
+						<a href="javascript:void(0);" th:data-uri="@{|/answer/vote/${answer.id}/${#lists.size(answer.voter)}|}" class="recommend btn btn-sm btn-outline-danger">
+							<i th:if="${#lists.size(answer.voter) == 0}" class="bi bi-heart"></i>
+							<i th:if="${#lists.size(answer.voter) > 0}" class="bi bi-heart-fill"></i>							
+							<span th:text="${answer.voter.size}"></span>
+						</a>
+						<a class="btn btn-sm btn-outline-secondary" 
+							th:href="@{|/answer/modify/${answer.id}|}" 
+							sec:authorize="isAuthenticated()" 	
+							th:if="${answer.author != null and answer.author.username == #authentication.name}" 
+						>수정</a>
+						<a href="javascript:void(0);"
+							class="delete btn btn-sm btn-outline-secondary" 
+							th:data-uri="@{|/answer/delete/${answer.id}|}" 
+							sec:authorize="isAuthenticated()" 	
+							th:if="${answer.author != null and answer.author.username == #authentication.name}" 
+						>삭제</a>
+					</div>
+				</div>
+			</div>
+			<!--/* 페이징 처리 */-->
+			<div th:if="${!paging.isEmpty()}">
+				<ul class="pagination pagination-sm justify-content-center">
+					<!--/* 첫 페이지 */-->
+					<li class="page-item">
+						<a th:href="@{|/question/detail/${question.id}?page=1|}"
+							th:classappend="${!paging.hasPrevious} ? 'disabled'"
+							class="page-link">
+							<i class="bi bi-chevron-double-left"></i>
+						</a>
+					</li>
+					<!--/* 이전 페이지 */-->
+					<li class="page-item">
+						<a th:href="@{|/question/detail/${question.id}?page=${paging.number}}|"
+							th:classappend="${!paging.hasPrevious} ? 'disabled'"
+							class="page-link">
+							<i class="bi bi-chevron-left"></i>
+						</a>
+					</li>
+					<!--/* 페이지 번호 */-->
+					<li th:each="page : ${#numbers.sequence(startPage, endPage)}"
+						th:classappend="${page-1 == paging.number} ? 'active'"
+						th:if="${page <= paging.totalPages}"
+						class="page-item">
+						<a th:href="@{|/question/detail/${question.id}?page=${page}|}" class="page-link">[[${page}]]</a>
+					</li>
+					<!--/* 다음 페이지 */-->
+					<li class="page-item">
+						<a th:href="@{|/question/detail/${question.id}?page=${paging.number+2}}|"
+							th:classappend="${!paging.hasNext} ? 'disabled'"
+							class="page-link">
+							<i class="bi bi-chevron-right"></i>
+						</a>
+					</li>
+					<!--/* 끝 페이지 */-->
+					<li class="page-item">
+						<a th:href="@{|/question/detail/${question.id}?page=${paging.totalPages}}|"
+							th:classappend="${!paging.hasNext} ? 'disabled'"
+							class="page-link">
+							<i class="bi bi-chevron-double-right"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	
+	</div>
+	<!-- Javascript -->
+	<script layout:fragment="script">
+		// 질문, 답변 삭제
+		const delete_elements = document.getElementsByClassName("delete");
+		Array.from(delete_elements).forEach(function(v) {
+			v.addEventListener("click", function() {
+				if(confirm("정말로 삭제하겠습니까?")) {
+					location = this.dataset.uri;
+				}
+			})
+		})
+		
+		// 질문, 답변 추천
+		const recommend_elements = document.getElementsByClassName("recommend");
+		Array.from(recommend_elements).forEach(function(v) {
+			v.addEventListener("click", function() {
+				location = this.dataset.uri;
+			})
+		})
+	</script>
+</html>
+

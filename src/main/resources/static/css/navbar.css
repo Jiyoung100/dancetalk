@@ -1,0 +1,35 @@
+/* navbar.html */
+.main-nav .nav-link { color: #fff; }
+.sub-nav .nav-link { color: #222; }
+.main-title { text-align: center; }
+.main-title p, .main-title h1{ 
+	text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+	font-weight: bold; 
+	text-align: center;
+	color: #fff;
+}
+.main-title a { margin-top: 20px; font-size: 0.9em; width: 150px;}
+.mouseover { font-weight: 600; }
+.main-nav .mouseover:hover {  }
+.sub-nav .mouseover:hover { color: #8B5CF6; }
+.nav-link i { font-size: 16px; }
+
+/* 모바일 메뉴 */
+.mobile-menu {
+    width: 300px;
+    background-color: #000;
+    color: #fff;
+}
+.mobile-menu .offcanvas-header {
+    padding: 25px;
+}
+.mobile-menu .offcanvas-body {
+    padding-top: 40px;
+}
+.mobile-menu .nav-item {
+    margin-bottom: 25px;
+}
+.mobile-menu .nav-link {
+    color: #fff;
+    font-size: 18px;
+}

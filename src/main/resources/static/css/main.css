@@ -1,0 +1,15 @@
+
+.swiper {
+	width: 100%;
+	height:100dvh;
+}
+
+.swiper-slide {
+    width: 100%;
+    height: 100%;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+.slide1 { background-image: url("/images/mainbanner01.jpg"); }
+.slide2 { background-image: url("/images/mainbanner02.jpg"); }

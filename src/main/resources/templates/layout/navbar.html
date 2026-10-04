@@ -1,0 +1,93 @@
+	<nav th:fragment="navbarFragment" class="navbar navbar-expand-lg navbar-dark p-3 fixed-top main-nav">
+		<div class="container-fluid flex-nowrap">
+			<a class="navbar-brand fw-bold" th:href="@{/}">DanceTalk</a>
+			
+			<!--/* PC 메뉴 */-->
+			<div class="d-none d-lg-flex flex-grow-1 justify-content-center">
+				<ul class="navbar-nav nav-underline gap-lg-4">
+					<li class="nav-item">
+						<a th:href="@{/question/list/2}" class="nav-link mouseover">팀원 모집</a>
+					</li>
+					<li class="nav-item">
+						<a th:href="@{/question/list/3}" class="nav-link mouseover">강사 구인·구직</a>
+					</li>
+					<li class="nav-item">
+						<a th:href="@{/question/list/4}" class="nav-link mouseover">클래스·워크숍</a>
+					</li>
+					<li class="nav-item">
+						<a th:href="@{/question/list/5}" class="nav-link mouseover">대회·오디션</a>
+					</li>
+					<li class="nav-item">
+						<a th:href="@{/question/list/6}" class="nav-link mouseover">연습실 정보</a>
+					</li>
+					<li class="nav-item">
+						<a th:href="@{/question/list/1}" class="nav-link mouseover">커뮤니티</a>
+					</li>
+				</ul>
+			</div>
+			
+			<!--/* 로그인, 로그아웃, 회원가입 */-->
+			<ul class="navbar-nav flex-row align-items-center ms-auto auth-menu gap-1">
+				<li class="nav-item">
+					<a class="nav-link mouseover" sec:authorize="isAnonymous()" th:href="@{/user/login}">
+						<i class="bi bi-box-arrow-in-right fs-4"></i>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link mouseover" sec:authorize="isAuthenticated()" th:href="@{/user/profile}">
+						<i class="bi bi-person-circle fs-4"></i>
+						<!--<span th:text="|${#authentication.getPrincipal().getUsername()}님|" class="fw-bold d-none d-md-inline"></span>-->
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link mouseover" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">
+						<i class="bi bi-box-arrow-left fs-4"></i>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link mouseover" th:href="@{/user/signup}" sec:authorize="isAnonymous()">
+						<i class="bi bi-person-add fs-4"></i>
+					</a>
+				</li>
+			</ul>
+			
+			<!--/* 모바일 메뉴 버튼 */-->
+			<a class="navbar-toggler border-0 ms-1 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+			    <span class="navbar-toggler-icon"></span>
+			</a>
+			<!--/* 모바일 메뉴 */-->
+	        <div class="offcanvas offcanvas-end mobile-menu d-lg-none" tabindex="-1" id="mobileMenu">
+
+	            <!--/* X 버튼 */-->
+	            <div class="offcanvas-header justify-content-end">
+	                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close">
+	                </button>
+	            </div>
+
+	            <!--/* 메뉴 내용 */-->
+	            <div class="offcanvas-body">
+	                <ul class="navbar-nav text-center">
+	                    <li class="nav-item">
+	                        <a class="nav-link" th:href="@{/question/list/2}">팀원 모집</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a class="nav-link" th:href="@{/question/list/3}">강사 구인·구직</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" th:href="@{/question/list/4}">클래스·워크숍</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" th:href="@{/question/list/5}">대회·오디션</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" th:href="@{/question/list/6}">연습실 정보</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" th:href="@{/question/list/1}">커뮤니티</a>
+	                    </li>
+	                </ul>
+	            </div>
+	        </div>
+			
+		</div>
+	</nav>

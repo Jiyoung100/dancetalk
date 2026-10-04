@@ -1,0 +1,47 @@
+html,body { margin: 0; padding: 0; }
+body {
+	color: #222;	
+	font-family: "Pretendard", sans-serif;
+  	font-optical-sizing: auto;
+	overflow-x: hidden;
+}
+i { font-size: 13px; }
+
+.mouseover { font-weight: 600; }
+.mouseover:hover { color: #8B5CF6; }
+
+textarea { width: 100%; resize: none; }
+input::placeholder, 
+textarea::placeholder { font-size: 0.9em; color: #ddd; }
+input[type=submit] { margin-top: 10px; }
+
+/* question_detail */
+table { border-top: 2px solid #ccc; }
+table > thead {
+	border-bottom: 2px solid #ccc;
+	font-size: 15px; 
+	color: #999;
+}
+
+@media (max-width: 991px) {
+    table > thead {
+        display: none;
+    }
+}
+
+.question-row:hover td { background-color: #fafafa; }
+.question-title { text-decoration: none; color: #222; }
+.question-title:hover {	text-decoration: underline; }
+.question-text { font-size: 14px; color: #777 !important; text-align: center;}
+.text-viewcount { color: #8B5CF6; }
+
+/* 버튼 */
+.btn-common, .btn-common:hover { color: #fff; background-color: #8B5CF6; }
+
+/* 페이지네이션 */
+.pagination .page-item .page-link { border: none; color: #555;}
+.pagination .page-item.active .page-link {
+    background-color: transparent;
+    color: #8B5CF6;
+	font-weight: bold;
+}

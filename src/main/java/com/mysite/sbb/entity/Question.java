@@ -65,7 +65,7 @@ public class Question {
 	@Column(columnDefinition = "int default 0")
 	private Integer viewCount = 0;
 	
-	// 케타고리
+	// 카테고리
 	@ManyToOne
 	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;

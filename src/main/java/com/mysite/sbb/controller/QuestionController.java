@@ -133,16 +133,18 @@ public class QuestionController {
 	// [ 질문 수정 - 화면에 보여줌 ]
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/modify/{id}")
-	public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id, Principal principal)
+	public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id, Principal principal, Model model)
 		throws ResponseStatusException {
 		Question question = questionService.getQuestion(id);
 		// 작성자와 로그인한 사용자가 같은지 확인
 		if(!question.getAuthor().getUsername().equals(principal.getName())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
 		}
-		
+
 		questionForm.setSubject(question.getSubject());
 		questionForm.setContent(question.getContent());
+		questionForm.setCategoryId(question.getCategory().getId());
+		model.addAttribute("categoryList", categoryService.getList());
 		return "question/question_form";
 	}
 	
@@ -150,20 +152,23 @@ public class QuestionController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/modify/{id}")
 	public String questionModify(@Valid QuestionForm questionForm, BindingResult bindingResult,
-			@PathVariable("id") Integer id, Principal principal) throws ResponseStatusException {
+			@PathVariable("id") Integer id, Principal principal, Model model) throws ResponseStatusException {
+
 		// 유효성 검증에 실패했다면
 		if(bindingResult.hasErrors()) {
+			model.addAttribute("categoryList", categoryService.getList());
 			return "question/question_form";
 		}
 		
 		Question question = questionService.getQuestion(id);
 		
 		// 작성자와 로그인한 사용자가 같음을 확인
-		if(!question.getAuthor().getUsername().equals(principal.getName())) {
+		if(question.getAuthor() == null || !question.getAuthor().getUsername().equals(principal.getName())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "질문 수정 권한이 없습니다.");
 		}
-		
-		questionService.modify(question, questionForm.getSubject(), questionForm.getContent());		
+
+		Category category = categoryService.getCategory(questionForm.getCategoryId());
+		questionService.modify(question, questionForm.getSubject(), questionForm.getContent(), category);
 		return "redirect:/question/detail/" + id;
 	}
 	

@@ -122,10 +122,11 @@ public class QuestionService {
 	}
 	
 	// 질문 수정
-	public void modify(Question question, String subject, String content) {
+	public void modify(Question question, String subject, String content, Category category) {
 		question.setSubject(subject);
 		question.setContent(content);
 		question.setModifyDate(LocalDateTime.now());
+		question.setCategory(category);
 		questionRepository.save(question);
 	}
 	

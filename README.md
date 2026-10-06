@@ -19,5 +19,5 @@ Java, Spring Boot, Spring Security, JPA, MySQL
 Thymeleaf, HTML, CSS, JavaScript, Bootstrap
 
 ## 배포
-AWS Lightsail
+AWS
 https://jiyoungdev.cloud/

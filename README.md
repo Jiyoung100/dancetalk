@@ -1,6 +1,7 @@
 # DanceTalk
-춤으로 연결되는 우리의 이야기
-댄서들이 정보를 공유하고 소통할 수 있는 댄스 커뮤니티입니다.
+춤으로 연결되는 우리의 이야기<br>
+댄서들이 정보를 공유하고 소통할 수 있는 댄스 커뮤니티입니다.<br>
+🔗 AWS URL : https://jiyoungdev.cloud/
 
 ## 프로젝트 포트폴리오
 프로젝트의 기획, 설계, 주요 기능 및 구현 과정은
@@ -21,7 +22,3 @@
 ## 기술 스택
 Java, Spring Boot, Spring Security, JPA, MySQL
 Thymeleaf, HTML, CSS, JavaScript, Bootstrap
-
-## 배포
-AWS
-https://jiyoungdev.cloud/

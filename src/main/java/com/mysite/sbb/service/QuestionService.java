@@ -34,9 +34,7 @@ import lombok.extern.java.Log;
 @Service
 @Log
 public class QuestionService {
-	
-	// < 레파지토리 객체를 사용하는 방법 >
-	// final을 사용하고, 클래스 위에는 @RequiredArgsConstructor를 붙여서 사용
+
 	private final QuestionRepository questionRepository;
 	
 	// 전체 질문 목록 리턴
@@ -66,37 +64,32 @@ public class QuestionService {
 	
 	// 카테고리 + 키워드 검색 + 페이징 처리
 	public Page<Question> getList(int page, String kw, Long categoryId) {
-		// 작성날짜(제목)의 내림차순으로 저장
+
 		List<Sort.Order> sorts = new ArrayList<>();
-		sorts.add(Sort.Order.desc("createDate")); // 작성날짜의 내림차순
+		sorts.add(Sort.Order.desc("createDate"));
 		Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-		
-		// 검색어가 없는 경우
+
 	    if (kw == null || kw.trim().isEmpty()) {
 	        return questionRepository.findByCategoryId(categoryId,pageable);
 	    }
 
-	    // 검색어가 있는 경우
 	    return questionRepository.queryAllByKeyword(kw,categoryId,pageable);
 	}
-	
-	// 페이징 처리를 한 질문 목록 리턴
-	// page: 조회할 페이지번호
-	// 10: 한 페이지에 보여줄 질문 개수
+
 	public Page<Question> getList(int page) {
-		// 작성날짜(제목)의 내림차순으로 저장
+
 		List<Sort.Order> sorts = new ArrayList<>();
-		sorts.add(Sort.Order.desc("createDate")); // 작성날짜의 내림차순
+		sorts.add(Sort.Order.desc("createDate"));
 		Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
 		return questionRepository.findAll(pageable);
 	}
 	
-	// 질문 1개 리턴
+	// 게시글 1개 리턴
 	@Transactional
 	public Question getQuestion(Integer id) {
 		Optional<Question> question = questionRepository.findById(id);
 		if(question.isPresent()) {
-			// 조회수 처리
+
 			Question q = question.get();
 			q.setViewCount(q.getViewCount()+1);
 			return q;
@@ -105,7 +98,7 @@ public class QuestionService {
 		}
 	}
 	
-	// 질문 등록 1 - 각 필드 사용
+	// 게시글 등록 1 - 각 필드 사용
 	public void create(String subject, String content, SiteUser author, Category category) {
 		Question q = new Question();
 		q.setSubject(subject);
@@ -116,12 +109,12 @@ public class QuestionService {
 		questionRepository.save(q);
 	}
 	
-	// 질문 등록 2 - 객체 사용
+	// 게시글 등록 2 - 객체 사용
 	public void create(Question question) {
 		questionRepository.save(question);
 	}
 	
-	// 질문 수정
+	// 게시글 수정
 	public void modify(Question question, String subject, String content, Category category) {
 		question.setSubject(subject);
 		question.setContent(content);
@@ -130,12 +123,12 @@ public class QuestionService {
 		questionRepository.save(question);
 	}
 	
-	// 질문 삭제
+	// 게시글 삭제
 	public void delete(Question question) {
 		questionRepository.delete(question);
 	}
 	
-	// 질문 추천
+	// 게시글 추천
 	public void vote(Question question, SiteUser siteUser, int size) {
 		if(question.getVoter().contains(siteUser)) {
 		    question.getVoter().remove(siteUser);

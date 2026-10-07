@@ -16,11 +16,9 @@ public class Category {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 카테고리명
     @Column(nullable = false, unique = true, length = 30)
     private String title;
 
-    // 카테고리 소개 문구
     @Column(length = 100)
     private String description;
 }

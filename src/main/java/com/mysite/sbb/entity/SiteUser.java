@@ -26,15 +26,12 @@ import lombok.ToString;
 @NoArgsConstructor @AllArgsConstructor
 public class SiteUser {
 
-	// primary key, auto_increment 속성
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	// 스프링 시큐리티를 통하여 암호화할 것이므로 길이를 제한하지 않도록 할 것
+
 	private String password;
-	
-	// unique, not null 제약조건 설정
+
 	@Column(unique = true, nullable = false, columnDefinition = "varchar(25)")
 	private String username;
 	
@@ -43,17 +40,14 @@ public class SiteUser {
 	
 	@Column(columnDefinition = "datetime default now()")
 	private LocalDate regDate;
-	
-	// unique 제약조건 설정
+
 	@Column(unique = true, columnDefinition = "varchar(100)")
 	private String email;
-	
-	// 회원이 작성한 게시글
+
     @Builder.Default
     @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Question> questionList = new ArrayList<>();
 
-    // 회원이 작성한 댓글
     @Builder.Default
     @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Answer> answerList = new ArrayList<>();

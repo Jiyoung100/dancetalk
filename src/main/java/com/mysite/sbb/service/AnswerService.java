@@ -23,7 +23,7 @@ public class AnswerService {
 	
 	private final AnswerRepository answerRepository;
 	
-	// 답변 등록 1 - 각 필드 사용
+	// 댓글 등록 1 - 각 필드 사용
 	public Answer create(Question quesiton, String content, SiteUser author) {
 		Answer answer = new Answer();
 		answer.setContent(content);
@@ -34,12 +34,12 @@ public class AnswerService {
 		return answer;
 	}
 	
-	// 답변 등록 2 - 객체 사용
+	// 댓글 등록 2 - 객체 사용
 	public void create(Answer answer) {
 		answerRepository.save(answer);
 	}
 	
-	// 답변 조회 - id로 조회
+	// 댓글 조회 - id로 조회
 	public Answer getAnswer(Integer id) {
 		Optional<Answer> answer = answerRepository.findById(id);
 		if(answer.isPresent()) {
@@ -49,19 +49,19 @@ public class AnswerService {
 		}
 	}
 	
-	// 답변 수정
+	// 댓글 수정
 	public void modify(Answer answer, String content) {
 		answer.setContent(content);
 		answer.setModifyDate(LocalDateTime.now());
 		answerRepository.save(answer);
 	}
 	
-	// 답변 삭제
+	// 댓글 삭제
 	public void delete(Answer answer) {
 		answerRepository.delete(answer);
 	}
 	
-	// 답변 추천
+	// 댓글 추천
 	public void vote(Answer answer, SiteUser siteUser, int size) {
 		if(answer.getVoter().contains(siteUser)) {
 			answer.getVoter().remove(siteUser);
@@ -71,7 +71,7 @@ public class AnswerService {
 		answerRepository.save(answer);
 	}
 	
-	// 답변 페이징 - 작성일을 기준으로 내림차순 정렬
+	// 댓글 페이징 - 작성일을 기준으로 내림차순 정렬
 	public Page<Answer> getAnswerListPaging(Question question, int page){
 		Pageable pageable = PageRequest.of(page-1, 5, Sort.by(Sort.Direction.DESC, "createDate"));
 		return answerRepository.findByQuestion(question, pageable);

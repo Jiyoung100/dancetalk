@@ -12,20 +12,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
-// 스프링 시큐리티 설정 클래스
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-	
-	// 모든 경로의 접근을 제어하기 위한 메소드
+
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((authorizeHttpRequests) -> 
-			// 스프링부트4 버전에서 변경됨 -> AntPathRequestMatcher에서 PassPatternRequestMatcher로 변경됨
-			// 1. 프로젝트의 모든 경로를 허용함 (/**)
-			// 2. /user/login 경로 허용
-		    // 3. /user/logout 경로 허용
+
 			authorizeHttpRequests.requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/**")).permitAll())
 			.formLogin((formLogin) -> formLogin.loginPage("/user/login").defaultSuccessUrl("/"))
 			.logout((logout) -> logout

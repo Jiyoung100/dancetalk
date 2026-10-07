@@ -9,11 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 import com.mysite.sbb.entity.Question;
 
-// Question 엔터티를 사용하여 CRUD를 하기 위한 인터페이스
-// 1. JpaRepository 인터페이스를 상속한 인터페이스 생성
-// 2. 제너릭 타입에서 사용할 2개의 속성
-// - Question: Question 엔터티에 대해서 CRUD를 함
-// - Integer: Question 엔터티의 @Id(primary key)로 설정된 필드의 타입
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	// 페이징 처리
 	Page<Question> findAll(Pageable pageable);

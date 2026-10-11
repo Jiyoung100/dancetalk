@@ -1,5 +1,5 @@
 <html layout:decorate="~{layout/layout}">
-	<div layout:fragment="content" class="container mt-3 d-flex justify-content-center">
+	<div layout:fragment="content" class="container my-3 d-flex justify-content-center">
 		<div class="w-100" style="max-width: 1000px;">
 			<h4 th:if="${questionForm.subject == null}" class="border-bottom my-3 pb-3 fw-bold">게시글 작성</h4>
 			<h4 th:if="${questionForm.subject != null}" class="border-bottom my-3 pb-3 fw-bold">게시글 수정</h4>
@@ -8,8 +8,8 @@
 				<!-- 유효성 검증 에러 -->
 				<div th:replace="~{form_errors :: formErrorsFragment}"></div>
 				<div class="mb-3">
-					<label class="form-label" for="category" >카테고리</label>
-					<select th:field="*{categoryId}" class="form-select">
+					<label class="form-label" for="category">카테고리</label>
+					<select th:field="*{categoryId}" class="form-select" id="category">
 						<option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.title}"></option>
 					</select>
 				</div>
@@ -21,8 +21,8 @@
 					<label class="form-label" for="content">내용</label>
 					<textarea class="form-control" th:field="*{content}" id="content" rows="10"></textarea>
 				</div>
-				<input th:if="${questionForm.subject == null}" class="btn btn-primary my-2" type="submit" value="등록">
-				<input th:if="${questionForm.subject != null}" class="btn btn-success my-2" type="submit" value="수정">
+				<input th:if="${questionForm.subject == null}" class="btn btn-common my-2" type="submit" value="등록">
+				<input th:if="${questionForm.subject != null}" class="btn btn-common my-2" type="submit" value="수정">
 			</form>
 		</div>
 	</div>

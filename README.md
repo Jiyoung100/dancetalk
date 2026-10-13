@@ -20,5 +20,5 @@
 - 검색 및 페이징
 
 ## 기술 스택
-Backend  : (https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+Backend  : ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 Frontend :

@@ -20,5 +20,5 @@
 - 검색 및 페이징
 
 ## 기술 스택
-Java, Spring Boot, Spring Security, JPA, MySQL
-Thymeleaf, HTML, CSS, JavaScript, Bootstrap
+Backend  : https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white; https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white
+Frontend :

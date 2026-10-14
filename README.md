@@ -1,3 +1,5 @@
+<img width="1920" height="1080" alt="dancetalk 메인 이미지" src="https://github.com/user-attachments/assets/03fcd11c-760e-4852-bb00-f7f84a379a1a" />
+
 # DanceTalk
 춤으로 연결되는 우리의 이야기<br>
 댄서들이 정보를 공유하고 소통할 수 있는 댄스 커뮤니티입니다.<br>
